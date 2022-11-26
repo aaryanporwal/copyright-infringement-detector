@@ -1,6 +1,7 @@
 import argparse
 from PIL import Image
 import imagehash
+from extract_frames import FrameExtractor
 
 parser = argparse.ArgumentParser(
   prog="Image Hash",
@@ -9,15 +10,21 @@ parser = argparse.ArgumentParser(
   add_help=True
 )
 
-parser.add_argument("-i1", help="Source image(FULL PATH)", required=True)
-parser.add_argument("-i2", help="Target image(FULL PATH)", required=True)
+parser.add_argument("-v1", help="Source Video(FULL PATH)", required=True, type=str)
+parser.add_argument("-v2", help="Target Video(FULL PATH)", required=False, type=str)
 
 args = parser.parse_args()
 
-srcimg = args.i1
-timg = args.i2
+src_video = args.v1 # Path to source video
+t_video = args.v2 # Path to target video
 
-src_hash = imagehash.phash(Image.open(srcimg))
-t_hash = imagehash.phash(Image.open(timg))
+# Extract frames from videos -> create a collage of frames -> create hash of collage -> calculate hamming distance between hashes
 
-print(src_hash - t_hash)
+frames_output_dir = "./frames"
+
+FrameExtractor(src_video, frames_output_dir)
+
+# src_hash = imagehash.phash(Image.open(srcimg))
+# t_hash = imagehash.phash(Image.open(timg))
+
+# print(src_hash - t_hash)
