@@ -20,7 +20,7 @@ t_video = args.v2 # Path to target video
 
 # Extract frames from videos -> create a collage of frames -> create hash of collage -> calculate hamming distance between hashes
 
-frames_output_dir = "./frames"
+frames_output_dir = ".\\frames"
 
 FrameExtractor(src_video, frames_output_dir)
 

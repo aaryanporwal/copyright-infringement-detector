@@ -1,5 +1,7 @@
 import os
 from subprocess import PIPE, Popen, check_output
+import subprocess
+import time
 
 class FrameExtractor:
     def __init__(
@@ -10,49 +12,31 @@ class FrameExtractor:
         self.src_video = src_video
         self.frames_output_dir = frames_output_dir
         self.extract()
+        self.delete_all_frames()
         
-    def extract(self) -> None:
-        """
-        Extract the frames at every n seconds where n is the
-        integer set to self.interval.
-
-        :return: None
-
-        :rtype: NoneType
-        """
-
-        ffmpeg_path = "/c/Users/abc/scoop/shims/ffmpeg.exe"
+    def extract(self):
         src_video = self.src_video
         frames_output_dir = self.frames_output_dir
         
-        # if os.name == "posix":
-        #   ffmpeg_path = shlex.quote(self.ffmpeg_path)
-        #   video_path = shlex.quote(self.video_path)
-        #   output_dir = shlex.quote(self.output_dir)
+        ffmpeg_path = os.path.join(os.getcwd(), "ffmpeg.exe")
+        path = os.path.join(os.getcwd(), "frames", "video_frame_%07d.jpeg")
+        
+        """
+        ffpeg command arg description:
+            -i: Input video
+            -s: Size of output frames
+            -r: Frame rate
+        """
+        command = "ffmpeg -i {src_video} -s 144x144 -r 1 {path}".format(src_video=src_video, path=path)
 
+        subprocess.run(command, shell=True, check=True)
 
-
-        command = (
-        f'"{ffmpeg_path}"'
-        + " -i "
-        + f'"{src_video}"'
-        + " -s 144x144 "
-        + "-r "
-        + "1"
-        + " "
-        + '"'
-        + frames_output_dir
-        + "/frame-%07d.jpg"
-        + '"'
-        )
-
-        process = Popen(command, shell=True, stdout=PIPE, stderr=PIPE)
-        output, error = process.communicate()
-
-        ffmpeg_output = output.decode()
-        ffmpeg_error = error.decode()
-
-        # if len(os.listdir(self.frames_output_dir)) == 0:
-        #     print("No frames extracted. Check the video path and try again.")
-        #     print(f"FFmpeg could not extract any frames.{command}\n{ffmpeg_output}\n{ffmpeg_error}")
-            
+#  Delete all frames after calculating hashes
+    def delete_all_frames(self):
+        # wait 2 seconds
+        time.sleep(5) # TODO: Remove this after completing hash calculation
+        frames_output_dir = self.frames_output_dir
+        for root, dirs, files in os.walk(frames_output_dir):
+            for file in files:
+                os.remove(os.path.join(root, file))
+                
