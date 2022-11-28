@@ -1,9 +1,9 @@
 import os
 import argparse
 from PIL import Image
-import imagehash
 from extract_frames import FrameExtractor
 from make_collage import MakeCollage
+import perceptual_hash
 
 parser = argparse.ArgumentParser(
   prog="Hamming Distance Calculator",
@@ -33,7 +33,7 @@ def make_collage_from_video(video_path, output_dir):
         )
     return collage_path
 
-src_hash = imagehash.phash(Image.open(os.path.join(make_collage_from_video(src_video, "frames-v1"))))
-t_hash = imagehash.phash(Image.open(os.path.join(make_collage_from_video(t_video, "frames-v2"))))
+src_hash = perceptual_hash.phash(Image.open(os.path.join(make_collage_from_video(src_video, "frames-v1"))))
+t_hash = perceptual_hash.phash(Image.open(os.path.join(make_collage_from_video(t_video, "frames-v2"))))
 
 print(src_hash - t_hash) # print hamming distance
