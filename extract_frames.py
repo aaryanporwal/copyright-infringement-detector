@@ -12,7 +12,7 @@ class FrameExtractor:
         self.src_video = src_video
         self.frames_output_dir = frames_output_dir
         self.extract()
-        self.delete_all_frames()
+        #self.delete_all_frames()
         
     def extract(self):
         src_video = self.src_video
