@@ -10,7 +10,7 @@ class MakeCollage:
         image_list: List[str],
         output_path: str,
         collage_image_width: int = 1024,
-    ) -> None:
+    ):
        
         self.image_list = image_list
         self.number_of_images = len(self.image_list)
@@ -21,7 +21,7 @@ class MakeCollage:
         output_path_dir = os.path.dirname(self.output_path) + "/"
         self.make()
 
-    def make(self) -> None:
+    def make(self):
         with Image.open(self.image_list[0]) as first_frame_image_in_list:
             frame_image_width, frame_image_height = first_frame_image_in_list.size
 
