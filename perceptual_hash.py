@@ -2,6 +2,9 @@ import numpy
 from PIL import Image
 ANTIALIAS = Image.ANTIALIAS
 
+# Imagehash(ndarray) -> binary_array -> binary_array.flatten() -> arr 
+# this arr can be passed into _binary_array_to_hex(arr)
+
 def _binary_array_to_hex(arr):
 	"""
 	internal function to make a hex string out of a binary array.
