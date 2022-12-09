@@ -51,7 +51,7 @@ r = redis.from_url(os.getenv("REDIS_URL"))
 # r.rpush("src_hashes", str(src_hash))
 # list_of_src_hashes = r.lrange("src_hashes", 0, -1)
 
-SIMILARITY_THRESHOLD = 5
+SIMILARITY_THRESHOLD = 10
 global_min = SIMILARITY_THRESHOLD
 
 for i in range(r.llen("src_hashes")):
@@ -59,10 +59,11 @@ for i in range(r.llen("src_hashes")):
     # print(r.lindex("src_hashes", i).decode("utf-8")) # .decode() because redis is returning bytestring
     global_min = min(global_min, hamming_distance((r.lindex("src_hashes", i).decode("utf-8")), t_hash))
 
-if global_min > SIMILARITY_THRESHOLD:
-    print("Video you provided is not infringed")
+
+if global_min >= SIMILARITY_THRESHOLD:
+    print("Video you provided is not infringed, with hamming distance: " + str(global_min))
 else:
-    print("Infringed video found")
+    print("Infringed video found, with hamming distance: " + str(global_min))
 
 # print(global_min)
 
