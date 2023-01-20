@@ -16,8 +16,8 @@ parser = argparse.ArgumentParser(
   add_help=True
 )
 
-parser.add_argument("-v1", help="Target Video(FULL PATH)", required=False, type=str)
-# parser.add_argument("-v1", help="Source Video(FULL PATH)", required=True, type=str)
+parser.add_argument("-v1", help="Target Video(FULL PATH)", required=True, type=str)
+# parser.add_argument("-v1", help="Source Video(FULL PATH)", required=True, type=str) 
 
 # Example call: python3 ihash.py -v1 video.mp4 -v2 video_with_markup.mp4
 
@@ -54,10 +54,10 @@ r = redis.from_url(os.getenv("REDIS_URL"))
 SIMILARITY_THRESHOLD = 10
 global_min = SIMILARITY_THRESHOLD
 
-for i in range(r.llen("src_hashes")):
-    # https://stackoverflow.com/questions/25745053/about-char-b-prefix-in-python3-4-1-client-connect-to-redis
-    # print(r.lindex("src_hashes", i).decode("utf-8")) # .decode() because redis is returning bytestring
-    global_min = min(global_min, hamming_distance((r.lindex("src_hashes", i).decode("utf-8")), t_hash))
+# for i in range(r.llen("src_hashes")):
+#     # https://stackoverflow.com/questions/25745053/about-char-b-prefix-in-python3-4-1-client-connect-to-redis
+#     # print(r.lindex("src_hashes", i).decode("utf-8")) # .decode() because redis is returning bytestring
+#     global_min = min(global_min, hamming_distance((r.lindex("src_hashes", i).decode("utf-8")), t_hash))
 
 
 if global_min >= SIMILARITY_THRESHOLD:

@@ -18,7 +18,7 @@ class FrameExtractor:
         src_video = self.src_video
         frames_output_dir = self.frames_output_dir
         
-        ffmpeg_path = os.path.join(os.getcwd(), "ffmpeg.exe")
+        ffmpeg_path = os.path.join(os.getcwd(), "ffmpeg")
         path = os.path.join(os.getcwd(), frames_output_dir, "video_frame_%07d.jpeg")
         
         """

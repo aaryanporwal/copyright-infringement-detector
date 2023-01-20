@@ -59,33 +59,6 @@ class ImageHash:
 	def __str__(self):
 		return _binary_array_to_hex(self.hash.flatten())
 
-	def __repr__(self):
-		return repr(self.hash)
-
-	def __sub__(self, other):
-		# type: (ImageHash) -> int
-		if other is None:
-			raise TypeError('Other hash must not be None.')
-		if self.hash.size != other.hash.size:
-			raise TypeError('ImageHashes must be of the same shape.', self.hash.shape, other.hash.shape)
-		return numpy.count_nonzero(self.hash.flatten() != other.hash.flatten())
-
-	def __eq__(self, other):
-		# type: (object) -> bool
-		if other is None:
-			return False
-		return numpy.array_equal(self.hash.flatten(), other.hash.flatten())  # type: ignore
-
-	def __ne__(self, other):
-		# type: (object) -> bool
-		if other is None:
-			return False
-		return not numpy.array_equal(self.hash.flatten(), other.hash.flatten())  # type: ignore
-
-	def __hash__(self):
-		# this returns a 8 bit integer, intentionally shortening the information
-		return sum([2**(i % 8) for i, v in enumerate(self.hash.flatten()) if v])
-
 	def __len__(self):
 		# Returns the bit length of the hash
 		return self.hash.size
