@@ -44,6 +44,9 @@ def hamming_distance(str1, str2):
     return distance
 
 # src_hash = str(perceptual_hash.phash(Image.open(os.path.join(make_collage_from_video(src_video, "frames-v1")))))
+if not os.path.exists("frames-v2"):
+    os.makedirs("frames-v2")
+    
 t_hash = str(perceptual_hash.phash(Image.open(os.path.join(make_collage_from_video(t_video, "frames-v2")))))
 print(t_hash)
 
