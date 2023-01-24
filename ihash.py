@@ -16,14 +16,14 @@ parser = argparse.ArgumentParser(
   add_help=True
 )
 
-parser.add_argument("-v1", help="Target Video(FULL PATH)", required=True, type=str)
+# parser.add_argument("-v1", help="Target Video(FULL PATH)", required=True, type=str)
 # parser.add_argument("-v1", help="Source Video(FULL PATH)", required=True, type=str) 
 
 # Example call: python3 ihash.py -v1 video.mp4 -v2 video_with_markup.mp4
 
-args = parser.parse_args()
+# args = parser.parse_args()
 
-t_video = args.v1 # Path to target video
+t_video = "video.mp4" # Path to target video
 
 def make_collage_from_video(video_path, output_dir):
     frame_extractor = FrameExtractor(video_path, output_dir)
